@@ -1,0 +1,80 @@
+/*
+ * game.css — Tiles, personagem, animações e baú.
+ * Caminhos de assets relativos à raiz do projeto (../ a partir de css/).
+ */
+
+.grid { display: flex; flex-direction: column; }
+.row  { display: flex; }
+
+.tile {
+  width: 16px;
+  height: 16px;
+  background-image: url('../assets/map/1\ -\ tilemap/spritesheet.png');
+}
+
+/* ── Personagem ── */
+.personagem {
+  position: absolute;
+  top:  -16px;
+  left:  -8px;
+  width:  32px;
+  height: 32px;
+  background-image: url('/assets/tiny_heroes/1\ Pink_Monster/Pink_Monster.png');
+  background-size: auto;
+  background-position: 0px 0px;
+  transition: transform 0.4s linear;
+  z-index: 10;
+}
+
+.andando {
+  background-image: url('/assets/tiny_heroes/1\ Pink_Monster/Pink_Monster_Walk_6.png');
+  animation: animAndar 0.4s steps(6) infinite;
+}
+
+.pulo {
+  background-image: url('/assets/tiny_heroes/1\ Pink_Monster/Pink_Monster_Jump_8.png');
+  animation:
+    animPuloSprite 0.45s steps(8) 1 forwards,
+    animPuloArco   0.45s ease-out  1;
+}
+
+@keyframes animAndar {
+  from { background-position:    0px 0px; }
+  to   { background-position: -192px 0px; }
+}
+
+@keyframes animPuloSprite {
+  from { background-position:    0px 0px; }
+  to   { background-position: -256px 0px; }
+}
+
+@keyframes animPuloArco {
+  0%   { margin-top:     0; }
+  40%  { margin-top: -16px; }
+  100% { margin-top:     0; }
+}
+
+/* ── Baú ── */
+.bau { position: relative; }
+
+.bau::after {
+  content: "";
+  position: absolute;
+  width:  32px;
+  height: 32px;
+  top:  -8px;
+  left: -8px;
+  background-image: url('../assets/map/Chests/RPG\ Chests.png');
+  background-position: 0px 0px;
+  background-size: auto;
+  z-index: 5;
+}
+
+.bau.bau-abrindo::after {
+  animation: animBau 0.5s steps(5) forwards;
+}
+
+@keyframes animBau {
+  from { background-position:    0px 0px; }
+  to   { background-position: -160px 0px; }
+}

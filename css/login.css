@@ -1,0 +1,329 @@
+/*
+ * login.css — Layout e estilos exclusivos da tela de login.
+ * Depende de base.css (variáveis de cor, fontes e raios).
+ */
+
+body {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ════════════════════════════════════════
+   PAINEL ESQUERDO — 60%
+   ════════════════════════════════════════ */
+
+.login-hero {
+  flex: 0 0 60%;
+  position: relative;
+  background: #071208;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+/* Grade de pixels (referência ao tilemap do jogo) */
+.login-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(76, 175, 80, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76, 175, 80, 0.05) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Vinheta lateral direita */
+.login-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 35% 60%, rgba(20, 60, 22, 0.7) 0%, transparent 80%),
+    linear-gradient(to right, transparent 60%, #0c0c0c 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Blocos decorativos flutuando ── */
+.hero-blocks {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.blk {
+  position: absolute;
+  border-radius: 5px;
+  opacity: 0.18;
+  animation: floatBlock linear infinite;
+}
+
+.blk-1 { width: 52px; height: 28px; background: #e07b00; top: 14%; left: 12%; animation-duration:  7s; animation-delay:    0s; transform: rotate(  6deg); }
+.blk-2 { width: 40px; height: 28px; background: #4CAF50; top: 28%; left: 68%; animation-duration:  9s; animation-delay:   -2s; transform: rotate( -9deg); }
+.blk-3 { width: 64px; height: 28px; background: #3a80d8; top: 55%; left:  8%; animation-duration:  8s; animation-delay:   -4s; transform: rotate(  4deg); }
+.blk-4 { width: 44px; height: 28px; background: #e07b00; top: 72%; left: 72%; animation-duration:  6s; animation-delay:   -1s; transform: rotate( -5deg); }
+.blk-5 { width: 36px; height: 28px; background: #a855f7; top: 42%; left: 45%; animation-duration: 10s; animation-delay:   -3s; transform: rotate( 11deg); }
+.blk-6 { width: 56px; height: 28px; background: #4CAF50; top:  8%; left: 52%; animation-duration: 11s; animation-delay:   -6s; transform: rotate( -3deg); }
+.blk-7 { width: 32px; height: 28px; background: #3a80d8; top: 85%; left: 30%; animation-duration: 7.5s; animation-delay:  -5s; transform: rotate(  8deg); }
+
+@keyframes floatBlock {
+  0%   { transform: translateY(  0px) rotate(var(--r, 5deg)); }
+  50%  { transform: translateY(-12px) rotate(var(--r, 5deg)); }
+  100% { transform: translateY(  0px) rotate(var(--r, 5deg)); }
+}
+
+/* ── Slot da imagem ──
+   Para trocar a imagem: mude o src da <img> em login.html.
+   object-fit: cover garante que a imagem cobre todo o painel
+   sem distorção, independente da proporção original. */
+.hero-image-slot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.hero-image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+}
+
+/* Gradiente de leitura sobre a imagem */
+.hero-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(to top, #071208 20%, transparent 100%);
+  z-index: 3;
+}
+
+/* ── Texto do hero ── */
+.hero-content {
+  position: relative;
+  z-index: 4;
+  padding: 0 48px 44px;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-pixel);
+  font-size: 22px;
+  color: var(--clr-accent);
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow .cursor {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  background: var(--clr-accent);
+  border-radius: 2px;
+  animation: blink-cursor 1s step-start infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(34px, 4.2vw, 58px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 16px;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.hero-title .highlight { color: var(--clr-accent); }
+
+.hero-desc {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(240, 240, 240, 0.55);
+  line-height: 1.65;
+  max-width: 400px;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════
+   PAINEL DIREITO — 40%
+   ════════════════════════════════════════ */
+
+.login-panel {
+  flex: 0 0 40%;
+  background: #111;
+  border-left: 1px solid #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 44px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 320px;
+}
+
+.login-heading {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--clr-text);
+  margin: 0 0 6px;
+}
+
+.login-sub {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  margin: 0 0 32px;
+}
+
+/* ── Campos ── */
+.form-group { margin-bottom: 14px; }
+
+.form-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 7px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #1a1a1a;
+  border: 1.5px solid #272727;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--clr-text);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.form-input::placeholder { color: #333; }
+
+.form-input:focus {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.12);
+}
+
+/* ── Botão principal ── */
+.btn-entrar {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+  background: var(--clr-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.btn-entrar:hover {
+  background: var(--clr-accent-hover);
+  box-shadow: 0 4px 18px rgba(76, 175, 80, 0.28);
+}
+
+.btn-entrar:active { transform: scale(0.98); }
+
+/* ── Divisor ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #222;
+}
+
+.divider span {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ── Google ── */
+.btn-google {
+  width: 100%;
+  padding: 12px 14px;
+  background: #1a1a1a;
+  border: 1.5px solid #272727;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: #aaa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-google:hover {
+  background: #202020;
+  border-color: #333;
+  color: #ddd;
+}
+
+.btn-google svg { flex-shrink: 0; }
+
+/* ── Rodapé ── */
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+
+.login-footer a {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #444;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.login-footer a:hover           { color: #888; }
+.login-footer .link-cadastro    { color: var(--clr-accent); }
+.login-footer .link-cadastro:hover { color: var(--clr-accent-light); }

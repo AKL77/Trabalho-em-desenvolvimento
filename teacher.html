@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Bloquinhos — Turmas</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/teacher.css">
+</head>
+<body>
+
+  <!-- ── Topbar ── -->
+  <header class="topbar">
+    <button class="topbar-hamburger" onclick="toggleSidebar()" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <span class="topbar-title">Bloquinhos</span>
+    <button class="btn-nova-turma" onclick="abrirModalCriar()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5"  y1="12" x2="19" y2="12"/>
+      </svg>
+      Nova turma
+    </button>
+  </header>
+
+  <!-- ── Overlay da sidebar ── -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-logo">Bloquinhos</span>
+      <button class="sidebar-close" onclick="fecharSidebar()" aria-label="Fechar menu">✕</button>
+    </div>
+
+    <div class="sidebar-nav">
+      <!-- Minhas turmas -->
+      <button class="sidebar-item active" id="navAtivas" onclick="mostrarAtivas()">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        Minhas turmas
+      </button>
+
+      <!-- Criar turma -->
+      <button class="sidebar-item" onclick="abrirModalCriar(); fecharSidebar()">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+          <line x1="8"  y1="12" x2="16" y2="12"/>
+        </svg>
+        Criar turma
+      </button>
+
+      <!-- Turmas arquivadas -->
+      <button class="sidebar-item" id="navArquivadas" onclick="mostrarArquivadas()">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="21 8 21 21 3 21 3 8"/>
+          <rect x="1" y="3" width="22" height="5"/>
+          <line x1="10" y1="12" x2="14" y2="12"/>
+        </svg>
+        Turmas arquivadas
+      </button>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Configurações (em breve) -->
+      <button class="sidebar-item" onclick="fecharSidebar()">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Configurações
+      </button>
+    </div>
+
+    <div class="sidebar-footer">
+      <!-- Sair -->
+      <button class="sidebar-item" onclick="window.location.href='login.html'">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Sair
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ── Conteúdo principal ── -->
+  <main class="main-content">
+    <h1 class="main-heading" id="mainHeading">Minhas turmas</h1>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+  </main>
+
+
+  <!-- ══ MODAL: Criar turma ══ -->
+  <div class="modal-overlay" id="modalCriar" onclick="fecharModalOverlay(event, 'modalCriar')">
+    <div class="modal">
+      <button class="modal-close" onclick="fecharModal('modalCriar')">✕</button>
+      <h2 class="modal-title">Criar nova turma</h2>
+      <p class="modal-text">Preencha as informações abaixo. Um código de acesso será gerado automaticamente.</p>
+
+      <div class="form-group-modal">
+        <label class="form-label-modal" for="inputNomeTurma">Nome da turma</label>
+        <input class="form-input-modal" id="inputNomeTurma"
+               type="text" placeholder="Ex: Turma A – Manhã" maxlength="60"
+               onkeydown="if(event.key==='Enter') confirmarCriacao()">
+      </div>
+      <div class="form-group-modal">
+        <label class="form-label-modal" for="inputInstituicao">Instituição de ensino</label>
+        <input class="form-input-modal" id="inputInstituicao"
+               type="text" placeholder="Ex: UFSM" maxlength="60"
+               onkeydown="if(event.key==='Enter') confirmarCriacao()">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-modal btn-cancelar" onclick="fecharModal('modalCriar')">Cancelar</button>
+        <button class="btn-modal btn-confirmar" style="background: var(--clr-accent);" onclick="confirmarCriacao()">
+          Criar turma
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ MODAL: Código da turma ══ -->
+  <div class="modal-overlay" id="modalCodigo" onclick="fecharModalOverlay(event, 'modalCodigo')">
+    <div class="modal">
+      <button class="modal-close" onclick="fecharModal('modalCodigo')">✕</button>
+      <h2 class="modal-title">Turma criada! 🎉</h2>
+      <p class="modal-text">Compartilhe este código com os alunos para que eles possam entrar na turma.</p>
+
+      <div class="codigo-display">
+        <div class="codigo-box" id="codigoDisplay">------</div>
+        <p class="codigo-hint">Os alunos inserem este código ao entrar no jogo</p>
+        <button class="btn-copiar" id="btnCopiar" onclick="copiarCodigo()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copiar código
+        </button>
+      </div>
+
+      <div class="modal-actions" style="justify-content: center; margin-top: 12px;">
+        <button class="btn-modal btn-cancelar" onclick="fecharModal('modalCodigo')" style="min-width: 120px;">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ MODAL: Confirmar exclusão ══ -->
+  <div class="modal-overlay" id="modalExcluir" onclick="fecharModalOverlay(event, 'modalExcluir')">
+    <div class="modal">
+      <button class="modal-close" onclick="fecharModal('modalExcluir')">✕</button>
+      <h2 class="modal-title">Excluir turma?</h2>
+      <p class="modal-text">Esta ação é permanente e não pode ser desfeita. Todos os dados da turma serão removidos.</p>
+      <div class="modal-actions">
+        <button class="btn-modal btn-cancelar" onclick="fecharModal('modalExcluir')">Cancelar</button>
+        <button class="btn-modal btn-confirmar" id="btnConfirmarExcluir">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    /* ── Paleta de cores para os headers dos cards ── */
+    const CORES = [
+      '#1565c0', /* azul      */
+      '#2e7d32', /* verde      */
+      '#6a1b9a', /* roxo       */
+      '#b45309', /* âmbar      */
+      '#00695c', /* teal       */
+      '#c62828', /* vermelho   */
+      '#4527a0', /* índigo     */
+      '#1a6b5f', /* verde-azul */
+    ];
+
+    /* ── Estado (persistido em localStorage) ── */
+    let turmas = JSON.parse(localStorage.getItem('bloquinhos_turmas') || '[]');
+
+    function salvar() {
+      localStorage.setItem('bloquinhos_turmas', JSON.stringify(turmas));
+    }
+
+    /* ── Gera código de 6 caracteres ── */
+    function gerarCodigo() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return code;
+    }
+
+    /* ── Sanitiza HTML ── */
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ════════ SIDEBAR ════════ */
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
+    }
+
+    function fecharSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('open');
+    }
+
+    /* ════════ MODAIS ════════ */
+
+    function abrirModal(id)  { document.getElementById(id).classList.add('open');    }
+    function fecharModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    function fecharModalOverlay(event, id) {
+      if (event.target === event.currentTarget) fecharModal(id);
+    }
+
+    function abrirModalCriar() {
+      document.getElementById('inputNomeTurma').value  = '';
+      document.getElementById('inputInstituicao').value = '';
+      document.getElementById('inputNomeTurma').classList.remove('erro');
+      document.getElementById('inputInstituicao').classList.remove('erro');
+      abrirModal('modalCriar');
+      setTimeout(() => document.getElementById('inputNomeTurma').focus(), 60);
+    }
+
+    function confirmarCriacao() {
+      const nome = document.getElementById('inputNomeTurma').value.trim();
+      const inst = document.getElementById('inputInstituicao').value.trim();
+
+      /* Valida campos */
+      let ok = true;
+      if (!nome) {
+        document.getElementById('inputNomeTurma').classList.add('erro');
+        setTimeout(() => document.getElementById('inputNomeTurma').classList.remove('erro'), 1400);
+        document.getElementById('inputNomeTurma').focus();
+        ok = false;
+      }
+      if (!inst) {
+        document.getElementById('inputInstituicao').classList.add('erro');
+        setTimeout(() => document.getElementById('inputInstituicao').classList.remove('erro'), 1400);
+        if (ok) document.getElementById('inputInstituicao').focus();
+        ok = false;
+      }
+      if (!ok) return;
+
+      const novaTurma = {
+        id:          Date.now(),
+        nome,
+        instituicao: inst,
+        codigo:      gerarCodigo(),
+        alunos:      0,
+        cor:         CORES[turmas.filter(t => !t.arquivada).length % CORES.length],
+        arquivada:   false,
+      };
+
+      turmas.push(novaTurma);
+      salvar();
+      renderCards();
+      fecharModal('modalCriar');
+
+      /* Mostra modal de código */
+      document.getElementById('codigoDisplay').textContent = novaTurma.codigo;
+      document.getElementById('btnCopiar').textContent     = '';
+      document.getElementById('btnCopiar').innerHTML =
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+         </svg> Copiar código`;
+      document.getElementById('btnCopiar').classList.remove('copiado');
+      abrirModal('modalCodigo');
+    }
+
+    function copiarCodigo() {
+      const codigo = document.getElementById('codigoDisplay').textContent;
+      navigator.clipboard.writeText(codigo).catch(() => {});
+      const btn = document.getElementById('btnCopiar');
+      btn.innerHTML = '✓ Copiado!';
+      btn.classList.add('copiado');
+    }
+
+    /* ════════ CARD MENU ════════ */
+
+    function toggleCardMenu(e, id) {
+      e.stopPropagation();
+      const alvo       = document.getElementById('dropdown-' + id);
+      const estaAberto = alvo.classList.contains('open');
+      fecharTodosDropdowns();
+      if (!estaAberto) {
+        alvo.classList.add('open');
+        alvo.closest('.turma-card').classList.add('menu-aberto');
+      }
+    }
+
+    function fecharTodosDropdowns() {
+      document.querySelectorAll('.card-dropdown.open').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.turma-card.menu-aberto').forEach(c => c.classList.remove('menu-aberto'));
+    }
+
+    function arquivarTurma(e, id) {
+      e.stopPropagation();
+      turmas = turmas.map(t => t.id === id ? { ...t, arquivada: true } : t);
+      salvar();
+      renderCards();
+    }
+
+    function solicitarExclusao(e, id) {
+      e.stopPropagation();
+      fecharTodosDropdowns();
+      document.getElementById('btnConfirmarExcluir').onclick = () => {
+        turmas = turmas.filter(t => t.id !== id);
+        salvar();
+        renderCards();
+        fecharModal('modalExcluir');
+      };
+      abrirModal('modalExcluir');
+    }
+
+    /* ════════ VIEWS ════════ */
+
+    let viewAtual = 'ativas';
+
+    function mostrarAtivas() {
+      viewAtual = 'ativas';
+      document.getElementById('mainHeading').textContent = 'Minhas turmas';
+      document.getElementById('navAtivas').classList.add('active');
+      document.getElementById('navArquivadas').classList.remove('active');
+      fecharSidebar();
+      renderCards();
+    }
+
+    function mostrarArquivadas() {
+      viewAtual = 'arquivadas';
+      document.getElementById('mainHeading').textContent = 'Turmas arquivadas';
+      document.getElementById('navAtivas').classList.remove('active');
+      document.getElementById('navArquivadas').classList.add('active');
+      fecharSidebar();
+      renderCards();
+    }
+
+    function reativarTurma(e, id) {
+      e.stopPropagation();
+      turmas = turmas.map(t => t.id === id ? { ...t, arquivada: false } : t);
+      salvar();
+      renderCards();
+    }
+
+    /* ════════ RENDER ════════ */
+
+    function renderCards() {
+      const grid     = document.getElementById('cardsGrid');
+      const filtradas = turmas.filter(t => viewAtual === 'arquivadas' ? t.arquivada : !t.arquivada);
+
+      const emptyMsg = viewAtual === 'arquivadas'
+        ? { titulo: 'Nenhuma turma arquivada', sub: 'Turmas arquivadas aparecem aqui' }
+        : { titulo: 'Nenhuma turma ainda',     sub: 'Clique em "Nova turma" para criar a primeira' };
+
+      if (filtradas.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <h3>${emptyMsg.titulo}</h3>
+            <p>${emptyMsg.sub}</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtradas.map(t => {
+        const arquivada    = !!t.arquivada;
+        const headerStyle  = arquivada ? 'background: #3a3a3a;' : `background: ${t.cor};`;
+        const cardClass    = arquivada ? 'turma-card turma-card--arquivada' : 'turma-card';
+        const menuOpcoes   = arquivada
+          ? `<button class="btn-reativar" onclick="reativarTurma(event, ${t.id})">♻️&nbsp; Reativar turma</button>
+             <button class="btn-excluir"  onclick="solicitarExclusao(event, ${t.id})">🗑️&nbsp; Excluir turma</button>`
+          : `<button class="btn-arquivar" onclick="arquivarTurma(event, ${t.id})">📦&nbsp; Arquivar turma</button>
+             <button class="btn-excluir"  onclick="solicitarExclusao(event, ${t.id})">🗑️&nbsp; Excluir turma</button>`;
+
+        return `
+          <div class="${cardClass}">
+            <div class="card-header" style="${headerStyle}">
+              <p class="card-nome">${esc(t.nome)}</p>
+              <p class="card-instituicao">${esc(t.instituicao)}</p>
+            </div>
+            <div class="card-body">
+              <div class="card-info-row">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <line x1="8"  y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+                Código:&nbsp;<span class="card-codigo">${esc(t.codigo)}</span>
+              </div>
+              <div class="card-info-row">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                ${t.alunos} aluno${t.alunos !== 1 ? 's' : ''} cadastrado${t.alunos !== 1 ? 's' : ''}
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-menu-wrapper">
+                <button class="card-menu-btn" onclick="toggleCardMenu(event, ${t.id})" title="Opções da turma">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="5"  r="1.5"/>
+                    <circle cx="12" cy="12" r="1.5"/>
+                    <circle cx="12" cy="19" r="1.5"/>
+                  </svg>
+                </button>
+                <div class="card-dropdown" id="dropdown-${t.id}">
+                  ${menuOpcoes}
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    /* ── Fecha dropdowns ao clicar em qualquer lugar ── */
+    document.addEventListener('click', fecharTodosDropdowns);
+
+    /* ── Init ── */
+    renderCards();
+  </script>
+</body>
+</html>

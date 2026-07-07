@@ -1,0 +1,151 @@
+/*
+ * layout.css — Estrutura de 4 linhas + painéis do jogo.
+ * Específico para game.html.
+ */
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── ROW 1: nome + level dots + hambúrguer ── */
+.row1 {
+  height: 50px;
+  background: var(--clr-bg-dark);
+  border-bottom: 2px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* ── ROW 2: descrição da fase + ações ── */
+.row2 {
+  background: var(--clr-bg-mid);
+  border-bottom: 2px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  flex-shrink: 0;
+  gap: 20px;
+}
+
+#fase-descricao {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--clr-text);
+  line-height: 1.4;
+}
+
+#fase-descricao strong { color: #fff; }
+#fase-descricao em     { font-style: normal; color: var(--clr-info); font-weight: 700; }
+
+.row2-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ── ROW 3: etiquetas dos painéis + botões de dica ── */
+.row-labels {
+  height: 50px;
+  background: var(--clr-bg-dark);
+  border-bottom: 2px solid var(--clr-border);
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+}
+
+.row-labels__blockly-area {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+}
+
+.row-labels__section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--clr-text-dim);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.row-labels__section--toolbox {
+  width: 248px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--clr-bg-mid);
+}
+
+.row-labels__section--workspace {
+  flex: 1;
+  min-width: 0;
+}
+
+.row-labels__hints-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 16px;
+  min-width: 0;
+}
+
+/* ── ROW 4: área principal (Blockly + mapa) ── */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.blockly-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--clr-border-light);
+  min-width: 0;
+  min-height: 0;
+}
+
+#blocklyDiv {
+  flex: 1;
+  min-height: 0;
+}
+
+.game-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--clr-bg);
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* JS define width/height baseado na escala calculada */
+.game-viewport-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.game-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  image-rendering: pixelated;
+}

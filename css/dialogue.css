@@ -1,0 +1,106 @@
+/*
+ * dialogue.css — Caixa de diálogo estilo visual novel.
+ * Sistema independente: pode ser reutilizado em outras páginas.
+ */
+
+.dialogue-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 32px;
+  z-index: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  cursor: pointer;
+}
+
+.dialogue-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Caixa — fundo marrom com borda dourada */
+.dialogue-box {
+  width: min(740px, calc(100vw - 32px));
+  height: 185px;
+  background: var(--clr-dlg-bg);
+  border: 3px solid var(--clr-dlg-border);
+  box-shadow:
+    inset 0 0 0 2px rgba(200, 144, 42, 0.12),
+    0 0 0 2px #0a0703,
+    0 0 0 5px #a07018,
+    0 14px 52px rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: stretch;
+  padding: 16px;
+  position: relative;
+  animation: dialogueEntrar 0.25s ease;
+  flex-shrink: 0;
+}
+
+@keyframes dialogueEntrar {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Quadro do personagem */
+.dialogue-portrait {
+  background-color: #130c05;
+  background-image: url('../assets/alan_turing_true.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: 130px;
+  flex-shrink: 0;
+  border: 2px solid var(--clr-dlg-border);
+  box-shadow:
+    inset 0 0 0 1px #0a0703,
+    inset 0 0 16px rgba(0, 0, 0, 0.4);
+  margin-right: 18px;
+}
+
+/* Área de texto */
+.dialogue-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  min-width: 0;
+  padding-bottom: 24px;
+}
+
+.dialogue-text {
+  font-family: var(--font-pixel);
+  font-size: 24px;
+  color: var(--clr-dlg-text);
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Seta ▶ piscante */
+.dialogue-continue {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-family: var(--font-pixel);
+  font-size: 24px;
+  color: var(--clr-dlg-arrow);
+  opacity: 0;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.dialogue-continue.visivel {
+  animation: piscarSeta 0.75s step-start infinite;
+}
+
+@keyframes piscarSeta {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

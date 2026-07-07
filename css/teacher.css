@@ -1,0 +1,491 @@
+/*
+ * teacher.css — Tela de turmas do professor.
+ * Depende de base.css e modals.css.
+ */
+
+/* ── Topbar ── */
+.topbar {
+  height: 60px;
+  background: var(--clr-bg-dark);
+  border-bottom: 2px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.topbar-hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.topbar-hamburger:hover { background: #2a2a2a; }
+
+.topbar-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #bbb;
+  border-radius: 2px;
+  transition: background var(--transition);
+}
+
+.topbar-hamburger:hover span { background: #fff; }
+
+.topbar-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--clr-text);
+  letter-spacing: 0.3px;
+}
+
+/* ── Sidebar overlay ── */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.sidebar-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 264px;
+  height: 100vh;
+  background: var(--clr-bg-dark);
+  border-right: 1px solid var(--clr-border);
+  z-index: 300;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar.open { transform: translateX(0); }
+
+.sidebar-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--clr-border-dim);
+}
+
+.sidebar-logo {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--clr-text);
+}
+
+.sidebar-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 16px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  transition: color var(--transition), background var(--transition);
+}
+
+.sidebar-close:hover { color: #fff; background: #2a2a2a; }
+
+.sidebar-nav {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.sidebar-footer {
+  padding: 10px 0;
+  border-top: 1px solid var(--clr-border-dim);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: #888;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  text-decoration: none;
+}
+
+.sidebar-item:hover              { background: #1e1e1e; color: #e0e0e0; }
+.sidebar-item.active             { color: var(--clr-accent); background: var(--clr-accent-bg); }
+.sidebar-item svg                { flex-shrink: 0; opacity: 0.65; }
+.sidebar-item:hover svg,
+.sidebar-item.active svg         { opacity: 1; }
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--clr-border-dim);
+  margin: 8px 20px;
+}
+
+/* ── Conteúdo principal ── */
+.main-content {
+  padding: 16px 20px 20px;
+  width: 100%;
+}
+
+.main-heading {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--clr-text);
+  margin: 0 0 16px;
+}
+
+.btn-nova-turma {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  margin-left: auto;          /* empurra para a direita */
+  background: var(--clr-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.btn-nova-turma:hover {
+  background: var(--clr-accent-hover);
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+}
+
+/* ── Card arquivado ── */
+.turma-card--arquivada {
+  border-color: #2e2e2e;
+}
+
+.turma-card--arquivada:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+
+.turma-card--arquivada .card-header::after {
+  display: none;
+}
+
+.turma-card--arquivada .card-nome {
+  color: #bbb;
+  text-shadow: none;
+}
+
+.turma-card--arquivada .card-instituicao {
+  color: #888;
+}
+
+.turma-card--arquivada .card-codigo {
+  color: #666;
+}
+
+.card-dropdown .btn-reativar { color: #81c784; }
+.card-dropdown .btn-reativar:hover { background: #1a2e1a; }
+
+/* ── Estado vazio ── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-state svg    { opacity: 0.25; margin-bottom: 16px; }
+.empty-state h3     { font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--clr-text-muted); margin: 0 0 8px; }
+.empty-state p      { font-family: var(--font-body); font-size: 14px; color: var(--clr-text-dim); margin: 0; }
+
+/* ── Grid de cards ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+/* ── Card de turma ── */
+.turma-card {
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border-dim);
+  border-radius: var(--radius-lg);
+  overflow: visible;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+}
+
+.turma-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Eleva o card acima dos irmãos (inclusive dos que estiverem com :hover)
+   enquanto o dropdown estiver aberto */
+.turma-card.menu-aberto {
+  z-index: 10;
+}
+
+/* Cabeçalho colorido */
+.card-header {
+  height: 116px;
+  padding: 18px 18px 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Padrão de grade sutil no header */
+.card-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+}
+
+.card-nome {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 5px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.card-instituicao {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 1;
+}
+
+/* Corpo */
+.card-body {
+  padding: 14px 18px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+}
+
+.card-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+}
+
+.card-info-row svg { flex-shrink: 0; opacity: 0.55; }
+
+.card-codigo {
+  font-family: var(--font-pixel);
+  font-size: 19px;
+  color: var(--clr-accent-light);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* Rodapé com menu */
+.card-footer {
+  padding: 8px 14px 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-menu-wrapper { position: relative; }
+
+.card-menu-btn {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--clr-text-dim);
+  transition: background var(--transition), color var(--transition);
+}
+
+.card-menu-btn:hover { background: #2a2a2a; color: #ddd; }
+
+.card-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #252525;
+  border: 1px solid var(--clr-border-light);
+  border-radius: 9px;
+  padding: 6px 0;
+  min-width: 175px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+  z-index: 400;
+  display: none;
+}
+
+.card-dropdown.open { display: block; }
+
+.card-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 11px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.card-dropdown .btn-arquivar { color: #aaa; }
+.card-dropdown .btn-arquivar:hover { background: #2e2e2e; color: #ddd; }
+.card-dropdown .btn-excluir  { color: #e05252; }
+.card-dropdown .btn-excluir:hover  { background: #2e1e1e; }
+
+/* ── Modal criar turma ── */
+.form-group-modal   { margin-bottom: 16px; }
+
+.form-label-modal {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 7px;
+}
+
+.form-input-modal {
+  width: 100%;
+  padding: 11px 13px;
+  background: #1a1a1a;
+  border: 1.5px solid #2a2a2a;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--clr-text);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.form-input-modal:focus {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.12);
+}
+
+.form-input-modal::placeholder { color: #333; }
+.form-input-modal.erro {
+  border-color: #e05252;
+  box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.14);
+}
+
+/* ── Modal código ── */
+.codigo-display { text-align: center; margin: 20px 0 4px; }
+
+.codigo-box {
+  display: inline-block;
+  padding: 14px 28px;
+  background: var(--clr-accent-bg);
+  border: 2px solid var(--clr-accent-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-pixel);
+  font-size: 38px;
+  color: var(--clr-accent-light);
+  letter-spacing: 7px;
+}
+
+.codigo-hint {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--clr-text-dim);
+  margin: 10px 0 0;
+}
+
+.btn-copiar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #888;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.btn-copiar:hover     { background: #2a2a2a; color: #ccc; }
+.btn-copiar.copiado   { color: var(--clr-accent-light); border-color: var(--clr-accent-border); }
