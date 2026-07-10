@@ -16,7 +16,9 @@ import { cmd_moverFrente, cmd_moverCima,
          cmd_pular, cmd_temBomba,
          processarFila, verificarVitoria,
          resetarFase }                         from './engine.js';
-import { iniciarDialogo, avancarDialogo }       from './dialogue.js';
+import { iniciarDialogo, avancarDialogo,
+         mostrarConclusao, acaoConclusaoReiniciar,
+         acaoConclusaoAvancar }                    from './dialogue.js';
 import { gerarDotsFases, toggleMenu,
          abrirConfiguracoes, abrirModal,
          fecharModal, fecharModalOverlay,
@@ -48,6 +50,8 @@ Object.assign(window, {
 
   // Diálogo
   avancarDialogo,
+  acaoConclusaoReiniciar,
+  acaoConclusaoAvancar,
 });
 
 /* ── Orquestração ──────────────────────────────────────────── */
@@ -95,10 +99,26 @@ function iniciarExecucao() {
   processarFila(() =>
     verificarVitoria(() =>
       iniciarDialogo(fase.dialogos, () => {
-        state.posX = fase.inicio.x;
-        state.posY = fase.inicio.y;
-        atualizarVisual(false);
-        document.getElementById('btnExecutar').disabled = false;
+        const proximaId = state.faseAtualIndex + 2;
+        mostrarConclusao(
+          `Parabéns! Você completou a fase ${fase.id}!`,
+          /* Jogar novamente */
+          () => {
+            state.posX = fase.inicio.x;
+            state.posY = fase.inicio.y;
+            atualizarVisual(false);
+            document.getElementById('btnExecutar').disabled = false;
+          },
+          /* Avançar */
+          proximaId <= fases.length
+            ? () => carregarFase(proximaId)
+            : () => {
+                state.posX = fase.inicio.x;
+                state.posY = fase.inicio.y;
+                atualizarVisual(false);
+                document.getElementById('btnExecutar').disabled = false;
+              }
+        );
       })
     )
   );

@@ -83,7 +83,55 @@
   word-break: break-word;
 }
 
-/* Seta ▶ piscante */
+/* ── Botões de conclusão de fase ── */
+.dialogue-actions {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.dialogue-actions.visivel {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.dlg-btn {
+  padding: 5px 16px;
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 17px;
+  line-height: 1.4;
+  cursor: pointer;
+  border: 2px solid;
+  transition: background 0.12s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.dlg-btn:active { transform: scale(0.96); }
+
+.dlg-btn-secundario {
+  background: transparent;
+  border-color: #7a5c10;
+  color: #a07828;
+}
+
+.dlg-btn-secundario:hover {
+  background: rgba(122, 92, 16, 0.2);
+  color: #c8a040;
+}
+
+.dlg-btn-primario {
+  background: #c8902a;
+  border-color: #e0aa40;
+  color: #0e0905;
+}
+
+.dlg-btn-primario:hover { background: #d4a838; }
 .dialogue-continue {
   position: absolute;
   bottom: 0;

@@ -17,6 +17,12 @@ let _index   = 0;
 let _timer   = null;
 let _done    = false;
 
+/* Estado do modo conclusão */
+let _modoOpcoes     = false;
+let _onReiniciar    = () => {};
+let _onAvancar      = () => {};
+let _conclusaoTexto = '';
+
 /* Referências ao DOM — resolvidas uma vez para desempenho */
 const _overlay    = () => document.getElementById('dialogueOverlay');
 const _textEl     = () => document.getElementById('dialogueText');
@@ -39,8 +45,20 @@ let _onFim = () => {};
  *   - Typewriter rolando → mostra texto completo
  *   - Texto completo + há próxima linha → avança
  *   - Texto completo + última linha → fecha
+ *
+ * Em modo conclusão: completa o texto se ainda rolando, senão bloqueia.
  */
 export function avancarDialogo() {
+  if (_modoOpcoes) {
+    if (!_done) {
+      clearTimeout(_timer);
+      _textEl().textContent = _conclusaoTexto;
+      _done = true;
+      document.getElementById('dialogueActions').classList.add('visivel');
+    }
+    return;
+  }
+
   if (!_done) {
     clearTimeout(_timer);
     _textEl().textContent = _linhas[_index];
@@ -57,6 +75,48 @@ export function avancarDialogo() {
   }
 }
 
+/**
+ * Exibe a mensagem de conclusão da fase com dois botões de ação
+ * dentro da caixa de diálogo.
+ */
+export function mostrarConclusao(texto, onReiniciar, onAvancar) {
+  _modoOpcoes     = true;
+  _onReiniciar    = onReiniciar ?? (() => {});
+  _onAvancar      = onAvancar  ?? (() => {});
+  _conclusaoTexto = texto;
+
+  _textEl().textContent = '';
+  _continueEl().classList.remove('visivel');
+  document.getElementById('dialogueActions').classList.remove('visivel');
+  _done = false;
+  clearTimeout(_timer);
+
+  _overlay().classList.add('active');
+  _typewriter(texto, () => {
+    document.getElementById('dialogueActions').classList.add('visivel');
+  });
+}
+
+export function acaoConclusaoReiniciar() {
+  if (!_modoOpcoes) return;
+  _modoOpcoes = false;
+  _onFim = () => {};           // impede _fechar() de reabrir o diálogo
+  clearTimeout(_timer);
+  document.getElementById('dialogueActions').classList.remove('visivel');
+  _overlay().classList.remove('active');
+  _onReiniciar();
+}
+
+export function acaoConclusaoAvancar() {
+  if (!_modoOpcoes) return;
+  _modoOpcoes = false;
+  _onFim = () => {};           // impede _fechar() de reabrir o diálogo
+  clearTimeout(_timer);
+  document.getElementById('dialogueActions').classList.remove('visivel');
+  _overlay().classList.remove('active');
+  _onAvancar();
+}
+
 /* ── Funções internas ── */
 
 function _exibirLinha(idx) {
@@ -67,7 +127,7 @@ function _exibirLinha(idx) {
   _typewriter(_linhas[idx]);
 }
 
-function _typewriter(texto) {
+function _typewriter(texto, onConcluido = null) {
   let i = 0;
   function passo() {
     if (i < texto.length) {
@@ -75,7 +135,11 @@ function _typewriter(texto) {
       _timer = setTimeout(passo, TYPEWRITER_VEL_MS);
     } else {
       _done = true;
-      _continueEl().classList.add('visivel');
+      if (onConcluido) {
+        onConcluido();
+      } else {
+        _continueEl().classList.add('visivel');
+      }
     }
   }
   passo();

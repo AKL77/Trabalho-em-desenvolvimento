@@ -125,6 +125,10 @@
       <div class="dialogue-content">
         <p class="dialogue-text" id="dialogueText"></p>
         <span class="dialogue-continue" id="dialogueContinue">▶</span>
+        <div class="dialogue-actions" id="dialogueActions">
+          <button class="dlg-btn dlg-btn-secundario" onclick="event.stopPropagation(); acaoConclusaoReiniciar()">↺ Jogar novamente</button>
+          <button class="dlg-btn dlg-btn-primario"   onclick="event.stopPropagation(); acaoConclusaoAvancar()">Avançar ›</button>
+        </div>
       </div>
     </div>
   </div>
