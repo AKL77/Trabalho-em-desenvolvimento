@@ -19,7 +19,7 @@
   left:  -8px;
   width:  32px;
   height: 32px;
-  background-image: url('/assets/tiny_heroes/1\ Pink_Monster/Pink_Monster.png');
+  background-image: url('/assets/tiny_heroes/1_Pink_Monster/Pink_Monster.png');
   background-size: auto;
   background-position: 0px 0px;
   transition: transform 0.4s linear;
@@ -27,12 +27,12 @@
 }
 
 .andando {
-  background-image: url('/assets/tiny_heroes/1\ Pink_Monster/Pink_Monster_Walk_6.png');
+  background-image: url('/assets/tiny_heroes/1_Pink_Monster/Pink_Monster_Walk_6.png');
   animation: animAndar 0.4s steps(6) infinite;
 }
 
 .pulo {
-  background-image: url('/assets/tiny_heroes/1\ Pink_Monster/Pink_Monster_Jump_8.png');
+  background-image: url('/assets/tiny_heroes/1_Pink_Monster/Pink_Monster_Jump_8.png');
   animation:
     animPuloSprite 0.45s steps(8) 1 forwards,
     animPuloArco   0.45s ease-out  1;
