@@ -14,7 +14,7 @@
 export const fases = [
   {
     id: 1,
-    descricao: '<strong>Objetivo:</strong> Chegue ao baú!',
+    descricao: '<strong>Objetivo:</strong> Chegue ao baú, desviando da bomba!',
     mapa: [
       [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
       [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
@@ -27,11 +27,11 @@ export const fases = [
     ],
     inicio: { x: 1, y: 3 },
     blocos: ['mover_frente', 'se_bomba', 'pular'],
-    conteudos: ['Sequência de comandos', 'Estrutura condicional', 'Detecção de obstáculos'],
+    conteudos: ['Sequência de comandos', 'Estrutura condicional'],
     dialogos: [
-      'Incrível! Você chegou ao baú usando uma sequência de comandos.',
-      'Com poucos blocos, seu personagem encontrou o caminho certo.',
-      'Continue praticando — os próximos desafios vão exigir raciocínio ainda mais criativo!',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fringilla metus ut nulla dignissim molestie.',
+      'Aenean tincidunt justo ut elementum pharetra. Morbi a nibh ornare, accumsan nunc et, finibus quam.',
+      'Vivamus rutrum vulputate tortor vel ultricies. Mauris ullamcorper auctor efficitur.',
     ],
   },
   {
